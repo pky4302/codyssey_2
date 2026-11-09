@@ -1,0 +1,17 @@
+# Python 가상환경
+.venv/
+venv/
+
+# Python 캐시 파일
+__pycache__/
+*.py[cod]
+
+# 환경 변수 및 비밀 정보
+.env
+
+# VS Code 개인 설정
+.vscode/
+
+# 운영체제 파일
+.DS_Store
+Thumbs.db
