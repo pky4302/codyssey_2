@@ -1,11 +1,13 @@
-from quiz import quiz_list
+from quiz import Quiz, quiz_list
 
 class QuizGame:
 
     def __init__(self):
         self.score = 0
+        self.best_score = 0
         self.current_question = 0
 
+    #목록
     def show_menu(self):
            print()
            print("========================================")
@@ -18,6 +20,8 @@ class QuizGame:
            print("5. 종료")
            print("========================================")
 
+
+    #목록에서 실행
     def start(self):
          while True:
               self.show_menu()
@@ -28,18 +32,19 @@ class QuizGame:
                    self.play_quiz()
 
               elif choice == "2":
-                   print("퀴즈 추가를 선택했습니다.")
+                   self.add_quiz()
 
               elif choice == "3":
                    self.list_quizzes()
 
               elif choice == "4":
-                   print("퀴즈 확인을 선택했습니다.")
+                   self.show_score()
 
               else:
                    print("게임을 종료합니다.")
                    break
 
+    
     #퀴즈풀기
     def play_quiz(self):
          self.score = 0
@@ -57,9 +62,13 @@ class QuizGame:
                    self.score += 1
               else:
                    print("틀렸습니다!")
-
+         
          wrong_count = total - self.score
          accuracy = self.score / total * 100
+
+         if self.score > self.best_score:
+              self.best_score = self.score
+              print("최고 점수가 갱신되었습니다.") 
 
          print()
          print("========================")
@@ -82,12 +91,24 @@ class QuizGame:
          while not question:
               print("문제는 비워둘 수 없습니다.")
               question = input("문제를 입력하세요: ").strip()
-         
-             
 
+         choices = []
 
-         
-         
+         for index in range(1,5):
+              choice = input(f"{index}번 선택지를 입력하세요: ").strip()
+
+              while not choice:
+                   print("선택지는 비워둘 수 없습니다.")
+                   choice = input(f"{index}번 선택지를 입력하세요: ").strip()
+
+              choices.append(choice)
+
+         answer = self.get_answer() #추가하더라도 검사
+
+         new_quiz = Quiz(question, choices, answer)
+
+         quiz_list.append(new_quiz)
+
 
     #퀴즈목록조회
     def list_quizzes(self):
@@ -108,6 +129,14 @@ class QuizGame:
 
          print()
          print(f"총 {len(quiz_list)}개의 퀴즈가 등록되어 있습니다.")
+         print("==============================")
+
+    #점수확인
+    def show_score(self):
+         print()
+         print("========== 점수 확인 ==========")
+         print(f"최근 점수: {self.score}점")
+         print(f"최고 점수: {self.best_score}점")
          print("==============================")
          
 
