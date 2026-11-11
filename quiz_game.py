@@ -27,26 +27,40 @@ class QuizGame:
 
     #목록에서 실행
     def start(self):
-         while True:
-              self.show_menu()
+         try:
+          
+             while True:
+                  self.show_menu()   
 
-              choice = self.get_menu_choice()
+                  choice = self.get_menu_choice()
 
-              if choice == "1":
-                   self.play_quiz()
+                  if choice == "1":
+                       self.play_quiz()
 
-              elif choice == "2":
-                   self.add_quiz()
+                  elif choice == "2":
+                       self.add_quiz()
 
-              elif choice == "3":
-                   self.list_quizzes()
+                  elif choice == "3":
+                       self.list_quizzes()
 
-              elif choice == "4":
-                   self.show_score()
+                  elif choice == "4":
+                       self.show_score()
 
-              else:
-                   print("게임을 종료합니다.")
-                   break
+                  else:
+                       print("게임을 종료합니다.")
+                       break
+                  
+         except KeyboardInterrupt:
+              print("\n사용자가 프로그램을 중단했습니다.")
+
+              self.save_state()
+              print("프로그램을 종료합니다.")
+
+         except EOFError:
+              print("\n입력이 종료되었습니다.")
+
+              self.save_state()
+              print("프로그램을 종료합니다.")
 
     
     #퀴즈풀기
