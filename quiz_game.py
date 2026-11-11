@@ -5,7 +5,7 @@ from quiz import Quiz, quiz_list
 class QuizGame:
 
     def __init__(self):
-        self.score = 0
+        self.score = None
         self.best_score = 0
         self.current_question = 0
 
@@ -65,6 +65,11 @@ class QuizGame:
     
     #퀴즈풀기
     def play_quiz(self):
+         if not quiz_list:
+              print("등록된 퀴즈가 없습니다.")
+              print("먼저 퀴즈를 추가해 주세요.")
+              return
+         
          self.score = 0
          total = len(quiz_list)
 
@@ -158,7 +163,11 @@ class QuizGame:
     def show_score(self):
          print()
          print("========== 점수 확인 ==========")
-         print(f"최근 점수: {self.score}점")
+
+         if self.score is None:
+              print("아직 퀴즈를 풀지 않았습니다.")
+         else:
+              print(f"최근 점수: {self.score}")
          print(f"최고 점수: {self.best_score}점")
          print("==============================")
          
@@ -219,10 +228,16 @@ class QuizGame:
 
          file_path = Path(__file__).parent / "state.json" #현재 파이썬 파일이 있는 폴더
 
-         with file_path.open("w", encoding="utf-8") as file:
-              json.dump(state, file, ensure_ascii=False, indent=4)
+         try:
+              
+             with file_path.open("w", encoding="utf-8") as file:
+                  json.dump(state, file, ensure_ascii=False, indent=4)
 
-         print("데이터가 저장되었습니다.")
+             print("데이터가 저장되었습니다.")
+
+         except OSError as e:
+              print("파일 저장에 실패했습니다.")
+              print("오류: ", e)
 
 
     #프로그램실행시 자동 읽어오기
@@ -285,6 +300,6 @@ class QuizGame:
 
               print("저장된 데이터를 불러왔습니다.")
 
-         except (json.JSONDecodeError, KeyError, TypeError, ValueError) as e:
+         except (json.JSONDecodeError, KeyError, TypeError, ValueError, OSError) as e:
               print("저장 파일이 손상되었습니다. 기본 데이터를 사용합니다.")
               print("오류: ", e)

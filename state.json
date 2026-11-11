@@ -1,7 +1,7 @@
 {
     "quizzes": [
         {
-            "question": 2,
+            "question": "Python에서 출력할 때 어떤 기호 쓰는가?",
             "choices": [
                 "input()",
                 "print()",
