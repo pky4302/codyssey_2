@@ -9,6 +9,8 @@ class QuizGame:
         self.best_score = 0
         self.current_question = 0
 
+        self.load_state()
+
     #목록
     def show_menu(self):
            print()
@@ -205,4 +207,37 @@ class QuizGame:
          print("데이터가 저장되었습니다.")
 
 
-         
+    #프로그램실행시 자동 읽어오기
+    def load_state(self):
+         file_path = Path(__file__).parent / "state.json"
+
+         # 저장 파일이 없는 경우
+         if not file_path.exists():
+              print("저장된 데이터가 없습니다. 기본 퀴즈를 사용합니다.")
+              return
+
+         try:
+              with file_path.open("r", encoding="utf-8") as file:
+                   state = json.load(file)
+
+              loaded_quizzes = []
+
+              for quiz_data in state["quizzes"]:
+                   quiz = Quiz(
+                        quiz_data["question"],
+                        quiz_data["choices"],
+                        quiz_data["answer"]
+                   )
+
+                   loaded_quizzes.append(quiz)
+
+              #기존 기본 퀴즈 목록을 불러온 목록으로 교체
+              quiz_list.clear()
+              quiz_list.extend(loaded_quizzes)
+
+              self.best_score = state["best_score"]
+
+              print("저장된 데이터를 불러왔습니다.")
+
+         except (json.JSONDecodeError, KeyError, TypeError):
+              print("저장 파일이 손상되었습니다. 기본 데이터를 사용합니다.")
