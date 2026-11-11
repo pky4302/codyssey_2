@@ -1,3 +1,5 @@
+import json
+from pathlib import Path
 from quiz import Quiz, quiz_list
 
 class QuizGame:
@@ -41,6 +43,7 @@ class QuizGame:
                    self.show_score()
 
               else:
+                   self.save_state()
                    print("게임을 종료합니다.")
                    break
 
@@ -176,4 +179,30 @@ class QuizGame:
                    continue
 
               return user_answer
+
+
+    #json파일생성저장
+    def save_state(self):
+         state = {
+              "quizzes": [],
+              "best_score": self.best_score
+         }
+
+         for quiz in quiz_list:
+              quiz_data = {
+                   "question": quiz.question,
+                   "choices": quiz.choices,
+                   "answer": quiz.answer
+              }
+
+              state["quizzes"].append(quiz_data)
+
+         file_path = Path(__file__).parent / "state.json" #현재 파이썬 파일이 있는 폴더
+
+         with file_path.open("w", encoding="utf-8") as file:
+              json.dump(state, file, ensure_ascii=False, indent=4)
+
+         print("데이터가 저장되었습니다.")
+
+
          
