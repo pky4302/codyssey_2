@@ -45,7 +45,6 @@ class QuizGame:
                    self.show_score()
 
               else:
-                   self.save_state()
                    print("게임을 종료합니다.")
                    break
 
@@ -73,6 +72,7 @@ class QuizGame:
 
          if self.score > self.best_score:
               self.best_score = self.score
+              self.save_state()
               print("최고 점수가 갱신되었습니다.") 
 
          print()
@@ -113,6 +113,10 @@ class QuizGame:
          new_quiz = Quiz(question, choices, answer)
 
          quiz_list.append(new_quiz)
+
+         self.save_state()
+
+         print("새로운 퀴즈가 등록되었습니다!")
 
 
     #퀴즈목록조회
