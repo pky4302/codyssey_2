@@ -1,7 +1,7 @@
 {
     "quizzes": [
         {
-            "question": "Python에서 화면에 문자를 출력하는 함수는?",
+            "question": 2,
             "choices": [
                 "input()",
                 "print()",

@@ -238,14 +238,42 @@ class QuizGame:
               with file_path.open("r", encoding="utf-8") as file:
                    state = json.load(file)
 
+              #전체 데이터 구조 검증
+              if not isinstance(state, dict):
+                   raise ValueError("잘못된 데이터 구조")
+
+              if not isinstance(state.get("quizzes"), list):
+                   raise ValueError("퀴즈 목록이 잘못되었습니다.")
+
+              best_score = state.get("best_score")
+
+              if type(best_score) is not int or best_score < 0:
+                   raise ValueError("최고 점수가 잘못되었습니다.")
+
               loaded_quizzes = []
 
               for quiz_data in state["quizzes"]:
-                   quiz = Quiz(
-                        quiz_data["question"],
-                        quiz_data["choices"],
-                        quiz_data["answer"]
-                   )
+                   
+                   if not isinstance(quiz_data, dict):
+                        raise ValueError("퀴즈 데이터가 잘못되었습니다.")
+                   
+                   question = quiz_data["question"]
+                   choices = quiz_data["choices"]
+                   answer = quiz_data["answer"]
+
+                   if not isinstance(question, str) or not question.strip():
+                        raise ValueError("문제가 잘못되었습니다.")
+
+                   if not isinstance(choices, list) or len(choices) != 4:
+                        raise ValueError("선택지가 잘못되었습니다.")
+
+                   if not all(isinstance(choice, str) and choice.strip() for choice in choices):
+                        raise ValueError("선택지 내용이 잘못되었습니다.")
+
+                   if type(answer) is not int or not 1 <= answer <= 4:
+                        raise ValueError("정답 번호가 잘못되었습니다.")
+
+                   quiz = Quiz(question, choices, answer)
 
                    loaded_quizzes.append(quiz)
 
@@ -257,5 +285,6 @@ class QuizGame:
 
               print("저장된 데이터를 불러왔습니다.")
 
-         except (json.JSONDecodeError, KeyError, TypeError):
+         except (json.JSONDecodeError, KeyError, TypeError, ValueError) as e:
               print("저장 파일이 손상되었습니다. 기본 데이터를 사용합니다.")
+              print("오류: ", e)
