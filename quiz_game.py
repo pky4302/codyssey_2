@@ -1,4 +1,5 @@
 import random
+from datetime import datetime
 import json
 from pathlib import Path
 from quiz import Quiz, quiz_list
@@ -9,6 +10,7 @@ class QuizGame:
         self.score = None
         self.best_score = 0
         self.current_question = 0
+        self.score_history = []
 
         self.load_state()
 
@@ -47,6 +49,7 @@ class QuizGame:
 
                   elif choice == "4":
                        self.show_score()
+                       self.show_history()
 
                   elif choice == "5":
                        self.delete_quiz()
@@ -136,6 +139,17 @@ class QuizGame:
          wrong_count = question_count - correct_count
          accuracy = correct_count / question_count * 100
 
+         self.score_history.append(
+              {     
+                   "played_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                   "score": self.score,
+                   "total": question_count,
+                   "correct": correct_count,
+                   "wrong": wrong_count,
+                   "accuracy": accuracy
+              }
+         )
+
          if self.score > self.best_score:
               self.best_score = self.score
               self.save_state()
@@ -151,6 +165,8 @@ class QuizGame:
          print(f"획득 점수: {self.score}점")
          print(f"정답률: {accuracy:.1f}%")
          print("========================")
+
+         self.save_state()
 
 
     #퀴즈추가
@@ -262,7 +278,28 @@ class QuizGame:
               print(f"최근 점수: {self.score}")
          print(f"최고 점수: {self.best_score}점")
          print("==============================")
-         
+
+    #저장된게임기록확인     
+    def show_history(self):
+         print()
+         print("========== 게임 기록 ==========")
+
+         if not self.score_history:
+              print("아직 게임 기록이 없습니다.")
+              return
+
+         for index, record in enumerate(self.score_history, start=1):
+               print(f"\n[{index}번째 게임]")
+               print(f"날짜/시간: {record['played_at']}")
+               print(f"푼 문제 수: {record['total']}개")
+               print(f"정답: {record['correct']}개")
+               print(f"오답: {record['wrong']}개")
+               print(f"점수: {record['score']}점")
+               print(f"정답률: {record['accuracy']:.1f}%")
+
+         print("==============================")
+              
+              
 
     #메뉴 입력값 검사
     def get_menu_choice(self):
@@ -329,7 +366,8 @@ class QuizGame:
     def save_state(self):
          state = {
               "quizzes": [],
-              "best_score": self.best_score
+              "best_score": self.best_score,
+              "score_history": self.score_history
          }
 
          for quiz in quiz_list:
@@ -381,6 +419,12 @@ class QuizGame:
               if type(best_score) not in (int, float) or best_score < 0:
                    raise ValueError("최고 점수가 잘못되었습니다.")
 
+              score_history = state.get("score_history", [])
+
+              if not isinstance(score_history, list):
+                   raise ValueError("점수 기록이 잘못되었습니다.")
+              
+
               loaded_quizzes = []
 
               for quiz_data in state["quizzes"]:
@@ -414,6 +458,7 @@ class QuizGame:
               quiz_list.extend(loaded_quizzes)
 
               self.best_score = state["best_score"]
+              self.score_history = score_history
 
               print("저장된 데이터를 불러왔습니다.")
 
