@@ -76,6 +76,7 @@ class QuizGame:
               return
          
          self.score = 0
+         correct_count = 0
          total = len(quiz_list)
 
 
@@ -84,20 +85,56 @@ class QuizGame:
 
      
          for index, quiz in enumerate(selected_question, start=1):
+              used_hint = False #힌트상태
+
               print()
               print(f"{index}번 문제]")
               quiz.show_question() #Quiz 클래스의 인스턴스 메소드
 
+
+              while True:
+                   hint_input = input(
+                        "힌트를 보려면 h를 입력하세요. (힌트 없이 진행하려면 Enter): "
+                   ).strip().lower()
+
+                   if hint_input == "h":
+                        if quiz.hint == "힌트가 없습니다.":
+                             print("이 문제에는 등록된 힌트가 없습니다.")
+                        else:
+                             if not used_hint:
+                                   used_hint = True
+
+                             quiz.show_hint()
+                        continue
+
+                   if hint_input == "":
+                        break
+                   
               user_answer = self.get_answer() #정답입력 검사 메소드 호출
 
+                 
               if quiz.check_answer(user_answer): #Quiz 클래스의 인스턴스 메소드
                    print("정답입니다!")
-                   self.score += 1
+                   correct_count += 1
+
+                   if used_hint:
+                        self.score += 0.5
+                        print("힌트 사용: 0.5점 획득!")
+
+                   else:
+                        self.score += 1
+                        print("힌트 미사용: 1점 획득!")
+
+
               else:
                    print("틀렸습니다!")
+
+               #     if used_hint:
+               #          self.score -= 0.5
+               #          print("힌트 사용: 0.5점 감점!")
          
-         wrong_count = question_count - self.score
-         accuracy = self.score / question_count * 100
+         wrong_count = question_count - correct_count
+         accuracy = correct_count / question_count * 100
 
          if self.score > self.best_score:
               self.best_score = self.score
@@ -109,8 +146,9 @@ class QuizGame:
          print("         게임 결과")
          print("========================")
          print(f"전체 문제: {question_count}개")
-         print(f"정답: {self.score}개")
+         print(f"정답: {correct_count}개")
          print(f"오답: {wrong_count}개")
+         print(f"획득 점수: {self.score}점")
          print(f"정답률: {accuracy:.1f}%")
          print("========================")
 
@@ -340,7 +378,7 @@ class QuizGame:
 
               best_score = state.get("best_score")
 
-              if type(best_score) is not int or best_score < 0:
+              if type(best_score) not in (int, float) or best_score < 0:
                    raise ValueError("최고 점수가 잘못되었습니다.")
 
               loaded_quizzes = []
