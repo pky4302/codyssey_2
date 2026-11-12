@@ -139,7 +139,12 @@ class QuizGame:
 
          answer = self.get_answer() #추가하더라도 검사
 
-         new_quiz = Quiz(question, choices, answer)
+         hint = input("힌트를 입력하세요: ").strip()
+
+         if not hint:
+              print("힌트가 없습니다.")
+
+         new_quiz = Quiz(question, choices, answer, hint)
 
          quiz_list.append(new_quiz)
 
@@ -293,7 +298,8 @@ class QuizGame:
               quiz_data = {
                    "question": quiz.question,
                    "choices": quiz.choices,
-                   "answer": quiz.answer
+                   "answer": quiz.answer,
+                   "hint": quiz.hint
               }
 
               state["quizzes"].append(quiz_data)
@@ -347,6 +353,7 @@ class QuizGame:
                    question = quiz_data["question"]
                    choices = quiz_data["choices"]
                    answer = quiz_data["answer"]
+                   hint = quiz_data.get("hint", "힌트가 없습니다.") #힌트가 없을 수 있기에 => get()
 
                    if not isinstance(question, str) or not question.strip():
                         raise ValueError("문제가 잘못되었습니다.")
@@ -360,7 +367,7 @@ class QuizGame:
                    if type(answer) is not int or not 1 <= answer <= 4:
                         raise ValueError("정답 번호가 잘못되었습니다.")
 
-                   quiz = Quiz(question, choices, answer)
+                   quiz = Quiz(question, choices, answer, hint)
 
                    loaded_quizzes.append(quiz)
 

@@ -1,9 +1,10 @@
 class Quiz:
-    #생성자로 값을 전달받기 위한 필요 과정
-    def __init__(self, question,choices, answer):
+
+    def __init__(self, question,choices, answer, hint="힌트가 없습니다."):
         self.question = question
         self.choices = choices
         self.answer = answer
+        self.hint = hint
 
     # 문제와 선택지 출력
     def show_question(self):
@@ -15,6 +16,10 @@ class Quiz:
     # 사용자입력정답과 실제정답 비교 확인 (boolean)
     def check_answer(self, user_answer):
         return self.answer == user_answer # true/false
+
+    # 힌트 보이게 하기
+    def show_hint(self):
+        print(f"힌트: {self.hint}")
 
 
 
