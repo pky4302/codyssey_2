@@ -49,16 +49,6 @@
                 "d"
             ],
             "answer": 2
-        },
-        {
-            "question": "test1",
-            "choices": [
-                "a",
-                "b",
-                "c",
-                "d"
-            ],
-            "answer": 3
         }
     ],
     "best_score": 5

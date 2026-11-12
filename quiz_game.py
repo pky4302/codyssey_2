@@ -22,7 +22,8 @@ class QuizGame:
            print("2. 퀴즈 추가")
            print("3. 퀴즈 목록")
            print("4. 점수 확인")
-           print("5. 종료")
+           print("5. 퀴즈 삭제")
+           print("6. 종료")
            print("========================================")
 
 
@@ -46,6 +47,9 @@ class QuizGame:
 
                   elif choice == "4":
                        self.show_score()
+
+                  elif choice == "5":
+                       self.delete_quiz()
 
                   else:
                        print("게임을 종료합니다.")
@@ -144,6 +148,45 @@ class QuizGame:
          print("새로운 퀴즈가 등록되었습니다!")
 
 
+    #퀴즈삭제
+    def delete_quiz(self):
+         print()
+         print("========== 퀴즈 삭제 ==========")
+
+         if not quiz_list:
+              print("삭제할 퀴즈가 없습니다.")
+              return
+
+         self.list_quizzes()
+
+         while True:
+              user_input = input(
+                   f"삭제할 퀴즈 번호를 입력하세요 (1~{len(quiz_list)})"
+              ).strip()
+
+              if not user_input:
+                   print("번호를 입력해 주세요.")
+                   continue
+
+              try:
+                   quiz_number = int(user_input)
+              except ValueError:
+                   print("숫자만 입력해 주세요.")
+                   continue
+
+              if quiz_number < 1 or quiz_number > len(quiz_list):
+                   print("올바른 퀴즈 번호를 입력해 주세요.")
+                   continue
+
+              break
+
+         deleted_quiz = quiz_list.pop(quiz_number -1)
+
+         self.save_state()
+
+         print(f"'{deleted_quiz.question}' 퀴즈가 삭제되었습니다.")
+
+
     #퀴즈목록조회
     def list_quizzes(self):
          print()
@@ -187,8 +230,8 @@ class QuizGame:
                    print("메뉴를 입력해 주세요.")
                    continue
 
-              if choice not in ["1", "2", "3", "4", "5"]:
-                   print("1부터 5까지의 메뉴를 선택해 주세요.")
+              if choice not in ["1", "2", "3", "4", "5", "6"]:
+                   print("1부터 6까지의 메뉴를 선택해 주세요.")
                    continue
 
               return choice
