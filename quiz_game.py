@@ -74,11 +74,12 @@ class QuizGame:
          self.score = 0
          total = len(quiz_list)
 
-         shuffled_quizzes = quiz_list.copy() #퀴즈목록복사 (복사는 원본보존을 위함)
-         random.shuffle(shuffled_quizzes) #퀴즈 순서 무작위 변경
 
+         question_count = self.get_question_count(total)
+         selected_question = random.sample(quiz_list, question_count)
 
-         for index, quiz in enumerate(shuffled_quizzes, start=1):
+     
+         for index, quiz in enumerate(selected_question, start=1):
               print()
               print(f"{index}번 문제]")
               quiz.show_question() #Quiz 클래스의 인스턴스 메소드
@@ -91,8 +92,8 @@ class QuizGame:
               else:
                    print("틀렸습니다!")
          
-         wrong_count = total - self.score
-         accuracy = self.score / total * 100
+         wrong_count = question_count - self.score
+         accuracy = self.score / question_count * 100
 
          if self.score > self.best_score:
               self.best_score = self.score
@@ -103,7 +104,7 @@ class QuizGame:
          print("========================")
          print("         게임 결과")
          print("========================")
-         print(f"전체 문제: {total}개")
+         print(f"전체 문제: {question_count}개")
          print(f"정답: {self.score}개")
          print(f"오답: {wrong_count}개")
          print(f"정답률: {accuracy:.1f}%")
@@ -214,6 +215,29 @@ class QuizGame:
 
               return user_answer
 
+
+    #출제할 문제 개수 입력받기 
+    def get_question_count(self, total):
+         while True:
+              user_input = input(
+                   f"몇 문제를 풀까요? (1~{total})"
+              ).strip()
+
+              if not user_input:
+                   print("문제 개수를 입력해 주세요.")
+                   continue
+
+              try:
+                   count = int(user_input)
+              except ValueError:
+                   print("숫자만 입력해 주세요.")
+
+              if count < 1 or count > total:
+                   print(f"1부터 {total}까지 입력해 주세요.")
+                   continue
+
+              return count
+          
 
     #json파일생성저장
     def save_state(self):
