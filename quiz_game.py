@@ -1,3 +1,4 @@
+import random
 import json
 from pathlib import Path
 from quiz import Quiz, quiz_list
@@ -73,7 +74,11 @@ class QuizGame:
          self.score = 0
          total = len(quiz_list)
 
-         for index, quiz in enumerate(quiz_list, start=1):
+         shuffled_quizzes = quiz_list.copy() #퀴즈목록복사 (복사는 원본보존을 위함)
+         random.shuffle(shuffled_quizzes) #퀴즈 순서 무작위 변경
+
+
+         for index, quiz in enumerate(shuffled_quizzes, start=1):
               print()
               print(f"{index}번 문제]")
               quiz.show_question() #Quiz 클래스의 인스턴스 메소드
