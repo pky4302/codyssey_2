@@ -192,12 +192,20 @@ score_history의 값은 딕셔너리 형태로 실행시각, 점수, 총문제�
 
 <img width="619" height="1475" alt="image" src="https://github.com/user-attachments/assets/6b96e350-2d74-4499-a393-6d297784f8f9" />
 
+--------------------------------------------------------------------------------------------------------------------------------------
 
+<개발환경 스크린샷>
 
+파이썬 버전확인
+<img width="542" height="52" alt="image" src="https://github.com/user-attachments/assets/d67095b0-2579-4c31-b338-cea0c6b9c391" />
 
+깃 git log --oneline --graph
 
+<img width="1070" height="627" alt="image" src="https://github.com/user-attachments/assets/fe40fe78-38cd-4948-b337-d06e38f6898e" />
 
+보너스 과제를 bonus 브랜치에서 작업하고 main에 병합함.
 
+<img width="676" height="80" alt="image" src="https://github.com/user-attachments/assets/501212fb-26f8-4ea2-a980-0a4b9c1e1431" />
 
 
 
