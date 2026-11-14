@@ -137,21 +137,75 @@ get_menu_choice(), get_answer(), get_question_count() 모두 입력값을 검증
 
 
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+```
 <파일구조>
 
+codyssey_2 폴더에
+
+.venv폴더 (파이썬 해석 exe)
+.gitignore (깃에 업로드 되면 안되는 .env와 같은 민감정보를 모아둠)
+main.py (프로그램 실행 위치)
+quiz_game.py (QuizGame 클래시 기반)
+quiz.py (Quiz 클래스, 기본 퀴즈 문제 데이터 quiz_list)
+README.md
+state.json
+
+```
+
+```
 <데이터파일설명>
+
+키는 총 3개, quizzes(퀴즈목록), best_score(최고점수), score_history(점수기록)
+
+quizzes의 값은 딕셔너리로 문제, 선택지, 답, 힌트의 키와 각 해당하는 값으로 이루어짐
+best_score의 값은 점수
+score_history의 값은 딕셔너리 형태로 실행시각, 점수, 총문제수, 정답수, 오답수, 성공률의 키와 각 해당하는 값으로 이루어짐
+
+```
+<프로그램 실행결과>
+
+메뉴화면
+
+<img width="472" height="424" alt="image" src="https://github.com/user-attachments/assets/83ff5990-5c2a-4361-be09-1df6c0b10b08" />
+
+퀴즈추가
+
+<img width="457" height="1013" alt="image" src="https://github.com/user-attachments/assets/8686daee-573a-4859-be8d-d6e9375f5793" />
+
+퀴즈풀기
+
+<img width="696" height="1588" alt="image" src="https://github.com/user-attachments/assets/5fb0d65c-7dfd-4644-b662-d445c2f2026d" />
+
+퀴즈점수확인
+
+<img width="483" height="1327" alt="image" src="https://github.com/user-attachments/assets/51f4ab68-e567-4874-afb8-69af30995892" />
+
+퀴즈목록확인
+
+<img width="572" height="1512" alt="image" src="https://github.com/user-attachments/assets/2281b191-adac-4bdb-8d60-574b32b6a6b1" />
+
+잘못된 입력처리
+
+<img width="460" height="788" alt="image" src="https://github.com/user-attachments/assets/26856969-4101-4bde-bf75-82f0132407d1" />
+
+파일 손상 시(예> 정답부분 타입 오류 시)
+
+<img width="619" height="1475" alt="image" src="https://github.com/user-attachments/assets/6b96e350-2d74-4499-a393-6d297784f8f9" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
