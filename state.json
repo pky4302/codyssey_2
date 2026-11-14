@@ -56,23 +56,6 @@
             "hint": "힌트가 없습니다."
         }
     ],
-    "best_score": 3.5,
-    "score_history": [
-        {
-            "played_at": "2026-11-12 19:27:17",
-            "score": 2,
-            "total": 3,
-            "correct": 2,
-            "wrong": 1,
-            "accuracy": 66.66666666666666
-        },
-        {
-            "played_at": "2026-11-12 19:27:42",
-            "score": 3.5,
-            "total": 6,
-            "correct": 4,
-            "wrong": 2,
-            "accuracy": 66.66666666666666
-        }
-    ]
+    "best_score": 0,
+    "score_history": []
 }
