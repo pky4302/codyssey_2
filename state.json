@@ -1,7 +1,7 @@
 {
     "quizzes": [
         {
-            "question": "Python에서 출력할 때 어떤 기호 쓰는가?",
+            "question": "Python에서 화면에 문자를 출력하는 함수는?",
             "choices": [
                 "input()",
                 "print()",
@@ -20,6 +20,17 @@
                 "<>"
             ],
             "answer": 3,
+            "hint": "힌트가 없습니다."
+        },
+        {
+            "question": "Python에서 함수를 정의할 때 사용하는 키워드는?",
+            "choices": [
+                "function",
+                "def",
+                "class",
+                "import"
+            ],
+            "answer": 2,
             "hint": "힌트가 없습니다."
         },
         {
@@ -43,28 +54,6 @@
             ],
             "answer": 2,
             "hint": "힌트가 없습니다."
-        },
-        {
-            "question": "test1",
-            "choices": [
-                "a",
-                "b",
-                "c",
-                "d"
-            ],
-            "answer": 2,
-            "hint": "힌트가 없습니다."
-        },
-        {
-            "question": "test2",
-            "choices": [
-                "a",
-                "b",
-                "c",
-                "d"
-            ],
-            "answer": 2,
-            "hint": "두번째"
         }
     ],
     "best_score": 3.5,
